@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-03T18:46:21+07:00",
+  "timestamp": "2026-01-03T17:07:38+07:00",
   "mode": "quick",
   "project": {
     "name": "llm-council",
@@ -7,13 +7,13 @@
   },
   "git": {
     "branch": "master",
-    "changes": 36
+    "changes": 1
   },
   "current_page": {
-    "page_type": "user_interface",
-    "page_name": "LLM Council - Visual Polish Complete",
-    "page_path": "frontend/src/components/*.css",
-    "page_url": "http://localhost:5173",
+    "page_type": "unknown",
+    "page_name": "Not Set",
+    "page_path": "",
+    "page_url": "",
     "wireframe_mode": "false"
   },
   "servers": [
@@ -23,39 +23,39 @@
       "process": "Google"
     },
     {
-      "port": 5173,
-      "pid": "12060",
+      "port": 3000,
+      "pid": "8352",
       "process": "node"
-    },
-    {
-      "port": 7000,
-      "pid": "57068",
-      "process": "ControlCe"
-    },
-    {
-      "port": 7000,
-      "pid": "57068",
-      "process": "ControlCe"
-    },
-    {
-      "port": 5000,
-      "pid": "57068",
-      "process": "ControlCe"
-    },
-    {
-      "port": 5000,
-      "pid": "57068",
-      "process": "ControlCe"
     },
     {
       "port": 8001,
-      "pid": "75127",
+      "pid": "18967",
       "process": "python3.1"
     },
     {
-      "port": 3000,
-      "pid": "89098",
+      "port": 5173,
+      "pid": "20364",
       "process": "node"
+    },
+    {
+      "port": 7000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 7000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 5000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 5000,
+      "pid": "57068",
+      "process": "ControlCe"
     }
   ]
 }

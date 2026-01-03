@@ -17,11 +17,13 @@ class GoogleProvider(BaseLLMProvider):
 
     # Model name mappings: OpenRouter format -> Gemini format
     MODEL_MAPPINGS = {
-        "google/gemini-pro": "gemini-1.5-pro",
+        "google/gemini-3-pro-preview": "gemini-3-pro-preview",
+        "google/gemini-3-flash-preview": "gemini-3-flash-preview",
+        "google/gemini-2.5-pro": "gemini-2.5-pro",
+        "google/gemini-2.5-flash": "gemini-2.5-flash",
+        "google/gemini-2.0-flash": "gemini-2.0-flash",
         "google/gemini-1.5-pro": "gemini-1.5-pro",
         "google/gemini-1.5-flash": "gemini-1.5-flash",
-        "google/gemini-2.0-flash": "gemini-2.0-flash-exp",
-        "google/gemini-3-pro-preview": "gemini-1.5-pro",  # Hypothetical -> latest stable
     }
 
     def __init__(self):

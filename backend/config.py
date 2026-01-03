@@ -54,3 +54,41 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 # Storage
 # ==============================================
 DATA_DIR = "data/conversations"
+
+# ==============================================
+# Model Registry
+# ==============================================
+
+# Available models per provider
+AVAILABLE_MODELS = {
+    "openai": [
+        "openai/gpt-4o",
+        "openai/gpt-4o-mini",
+        "openai/o1",
+        "openai/o1-mini",
+    ],
+    "anthropic": [
+        "anthropic/claude-sonnet-4-20250514",
+        "anthropic/claude-opus-4-20250514",
+        "anthropic/claude-3.5-sonnet",
+    ],
+    "google": [
+        "google/gemini-3-pro-preview",      # Gemini 3 Pro (latest, Jan 2026)
+        "google/gemini-3-flash-preview",    # Gemini 3 Flash (fast, Jan 2026)
+        "google/gemini-2.5-pro",            # Gemini 2.5 Pro
+        "google/gemini-2.5-flash",          # Gemini 2.5 Flash
+        "google/gemini-2.0-flash",          # Gemini 2.0 Flash
+    ],
+}
+
+# Chairman-eligible models (powerful models only)
+CHAIRMAN_ELIGIBLE_MODELS = [
+    "openai/gpt-4o",
+    "openai/o1",
+    "anthropic/claude-sonnet-4-20250514",
+    "anthropic/claude-opus-4-20250514",
+    "google/gemini-3-pro-preview",          # Gemini 3 Pro
+    "google/gemini-3-flash-preview",        # Gemini 3 Flash
+    "google/gemini-2.5-pro",                # Gemini 2.5 Pro
+    "google/gemini-2.5-flash",              # Gemini 2.5 Flash
+]

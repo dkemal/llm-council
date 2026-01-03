@@ -1,25 +1,92 @@
 .stage3 {
-  background: #f0fff0;
-  border-color: #c8e6c8;
+  background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%); /* Gradient for prominence */
+  border: 3px solid #2d8a2d; /* Thicker border - was 2px */
+  box-shadow: 0 6px 20px rgba(45, 138, 45, 0.2),
+              0 2px 8px rgba(45, 138, 45, 0.1); /* Multi-layer shadow for depth */
+  animation: slideInUp 0.4s ease-out, pulseGlow 2s ease-in-out;
+  position: relative;
+  margin-top: 32px; /* Extra space above to emphasize importance */
+}
+
+.stage3::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(135deg, #2d8a2d, #4caf50);
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+/* Override stage-title for Stage 3 to make it MUCH larger and more prominent */
+.stage3 .stage-title {
+  font-size: 20px; /* Much larger - was 18px */
+  color: #1b5e20; /* Darker green for better contrast */
+  font-weight: 700;
+  padding: 8px 0;
+  border-bottom: 2px solid #c8e6c8;
+  margin-bottom: 20px;
+}
+
+.stage3 .stage-title::before {
+  background: #2d8a2d; /* Green indicator */
+  width: 6px; /* Thicker than other stages */
+  height: 24px;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(45, 138, 45, 0.2),
+                0 2px 8px rgba(45, 138, 45, 0.1);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(45, 138, 45, 0.25),
+                0 4px 12px rgba(45, 138, 45, 0.15);
+  }
 }
 
 .final-response {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 6px;
-  border: 1px solid #c8e6c8;
+  padding: 28px; /* Even more padding - was 24px */
+  border-radius: 10px; /* Larger radius - was 8px */
+  border: 2px solid #66bb6a; /* Thicker, brighter border */
+  box-shadow: 0 3px 10px rgba(45, 138, 45, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5); /* Inner highlight */
 }
 
 .chairman-label {
-  color: #2d8a2d;
-  font-size: 12px;
+  color: #1b5e20; /* Darker green for better contrast */
+  font-size: 14px; /* Larger - was 13px */
   font-family: monospace;
-  margin-bottom: 12px;
-  font-weight: 600;
+  margin-bottom: 20px; /* More space - was 16px */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px; /* More spacing - was 0.5px */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chairman-label::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #2d8a2d;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .final-text {
-  color: #333;
-  line-height: 1.7;
-  font-size: 15px;
+  color: #1a1a1a; /* WCAG AAA compliant - was #333 */
+  line-height: 1.8;
+  font-size: 17px; /* Larger - was 16px */
+  font-weight: 400;
 }

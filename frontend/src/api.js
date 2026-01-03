@@ -6,6 +6,17 @@ const API_BASE = 'http://localhost:8001';
 
 export const api = {
   /**
+   * Get available models configuration.
+   */
+  async getModels() {
+    const response = await fetch(`${API_BASE}/api/models`);
+    if (!response.ok) {
+      throw new Error('Failed to get models');
+    }
+    return response.json();
+  },
+
+  /**
    * List all conversations.
    */
   async listConversations() {
@@ -48,8 +59,17 @@ export const api = {
 
   /**
    * Send a message in a conversation.
+   * @param {string} conversationId - The conversation ID
+   * @param {string} content - The message content
+   * @param {object} options - Optional model configuration
+   * @param {string[]} options.councilModels - Custom council models
+   * @param {string} options.chairmanModel - Custom chairman model
    */
-  async sendMessage(conversationId, content) {
+  async sendMessage(conversationId, content, options = {}) {
+    const body = { content };
+    if (options.councilModels) body.council_models = options.councilModels;
+    if (options.chairmanModel) body.chairman_model = options.chairmanModel;
+
     const response = await fetch(
       `${API_BASE}/api/conversations/${conversationId}/message`,
       {
@@ -57,7 +77,7 @@ export const api = {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify(body),
       }
     );
     if (!response.ok) {
@@ -71,9 +91,16 @@ export const api = {
    * @param {string} conversationId - The conversation ID
    * @param {string} content - The message content
    * @param {function} onEvent - Callback function for each event: (eventType, data) => void
+   * @param {object} options - Optional model configuration
+   * @param {string[]} options.councilModels - Custom council models
+   * @param {string} options.chairmanModel - Custom chairman model
    * @returns {Promise<void>}
    */
-  async sendMessageStream(conversationId, content, onEvent) {
+  async sendMessageStream(conversationId, content, onEvent, options = {}) {
+    const body = { content };
+    if (options.councilModels) body.council_models = options.councilModels;
+    if (options.chairmanModel) body.chairman_model = options.chairmanModel;
+
     const response = await fetch(
       `${API_BASE}/api/conversations/${conversationId}/message/stream`,
       {
@@ -81,7 +108,7 @@ export const api = {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify(body),
       }
     );
 

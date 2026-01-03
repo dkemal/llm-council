@@ -9,11 +9,30 @@ function App() {
   const [currentConversationId, setCurrentConversationId] = useState(null);
   const [currentConversation, setCurrentConversation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Load conversations on mount
+  // Model selection state
+  const [modelsConfig, setModelsConfig] = useState(null);
+  const [selectedCouncil, setSelectedCouncil] = useState([]);
+  const [selectedChairman, setSelectedChairman] = useState('');
+
+  // Load models and conversations on mount
   useEffect(() => {
+    loadModels();
     loadConversations();
   }, []);
+
+  const loadModels = async () => {
+    try {
+      const config = await api.getModels();
+      setModelsConfig(config);
+      // Initialize with defaults
+      setSelectedCouncil(config.defaults.council_models);
+      setSelectedChairman(config.defaults.chairman_model);
+    } catch (error) {
+      console.error('Failed to load models:', error);
+    }
+  };
 
   // Load conversation details when selected
   useEffect(() => {
@@ -89,8 +108,16 @@ function App() {
         messages: [...prev.messages, assistantMessage],
       }));
 
-      // Send message with streaming
-      await api.sendMessageStream(currentConversationId, content, (eventType, event) => {
+      // Send message with streaming (pass model config)
+      const modelOptions = {
+        councilModels: selectedCouncil,
+        chairmanModel: selectedChairman
+      };
+
+      await api.sendMessageStream(
+        currentConversationId,
+        content,
+        (eventType, event) => {
         switch (eventType) {
           case 'stage1_start':
             setCurrentConversation((prev) => {
@@ -169,7 +196,9 @@ function App() {
           default:
             console.log('Unknown event type:', eventType);
         }
-      });
+      },
+      modelOptions
+      );
     } catch (error) {
       console.error('Failed to send message:', error);
       // Remove optimistic messages on error
@@ -181,13 +210,44 @@ function App() {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   return (
     <div className="app">
+      {/* Mobile menu button */}
+      <button className="mobile-menu-btn" onClick={toggleSidebar} aria-label="Toggle menu">
+        ☰
+      </button>
+
+      {/* Overlay for mobile */}
+      <div
+        className={`sidebar-overlay ${isSidebarOpen ? 'active' : ''}`}
+        onClick={closeSidebar}
+      />
+
       <Sidebar
         conversations={conversations}
         currentConversationId={currentConversationId}
-        onSelectConversation={handleSelectConversation}
-        onNewConversation={handleNewConversation}
+        onSelectConversation={(id) => {
+          handleSelectConversation(id);
+          closeSidebar(); // Close sidebar on mobile after selection
+        }}
+        onNewConversation={() => {
+          handleNewConversation();
+          closeSidebar(); // Close sidebar on mobile after creating conversation
+        }}
+        modelsConfig={modelsConfig}
+        selectedCouncil={selectedCouncil}
+        selectedChairman={selectedChairman}
+        onCouncilChange={setSelectedCouncil}
+        onChairmanChange={setSelectedChairman}
+        isOpen={isSidebarOpen}
       />
       <ChatInterface
         conversation={currentConversation}

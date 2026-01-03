@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Settings from './Settings';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -6,15 +7,29 @@ export default function Sidebar({
   currentConversationId,
   onSelectConversation,
   onNewConversation,
+  modelsConfig,
+  selectedCouncil,
+  selectedChairman,
+  onCouncilChange,
+  onChairmanChange,
+  isOpen,
 }) {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <h1>LLM Council</h1>
         <button className="new-conversation-btn" onClick={onNewConversation}>
           + New Conversation
         </button>
       </div>
+
+      <Settings
+        modelsConfig={modelsConfig}
+        selectedCouncil={selectedCouncil}
+        selectedChairman={selectedChairman}
+        onCouncilChange={onCouncilChange}
+        onChairmanChange={onChairmanChange}
+      />
 
       <div className="conversation-list">
         {conversations.length === 0 ? (

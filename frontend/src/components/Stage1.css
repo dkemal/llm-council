@@ -1,16 +1,30 @@
 .stage {
   margin: 24px 0;
   padding: 20px;
-  background: #fafafa;
+  background: #f8f9fa;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* Enhanced subtle depth */
+  animation: slideInUp 0.3s ease-out;
 }
 
 .stage-title {
   margin: 0 0 16px 0;
-  color: #333;
+  color: #1a1a1a; /* WCAG AAA compliant - was #333 */
   font-size: 16px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background: #4a90e2;
+  border-radius: 2px;
 }
 
 .tabs {
@@ -25,16 +39,18 @@
   background: #ffffff;
   border: 1px solid #d0d0d0;
   border-radius: 6px 6px 0 0;
-  color: #666;
+  color: #595959; /* WCAG AA compliant - was #666 */
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .tab:hover {
   background: #f0f0f0;
   color: #333;
   border-color: #4a90e2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.15);
 }
 
 .tab.active {
@@ -50,16 +66,18 @@
   padding: 16px;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .model-name {
-  color: #888;
+  color: #595959; /* WCAG AA compliant 4.5:1 */
   font-size: 12px;
   margin-bottom: 12px;
   font-family: monospace;
+  font-weight: 500;
 }
 
 .response-text {
-  color: #333;
+  color: #1a1a1a; /* WCAG AAA compliant - was #333 */
   line-height: 1.6;
 }

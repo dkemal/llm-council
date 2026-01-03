@@ -12,7 +12,7 @@ import asyncio
 from . import storage
 from .council import run_full_council, generate_conversation_title, stage1_collect_responses, stage2_collect_rankings, stage3_synthesize_final, calculate_aggregate_rankings
 from .providers import get_provider_status
-from .config import COUNCIL_MODELS, CHAIRMAN_MODEL, LLM_MODE
+from .config import COUNCIL_MODELS, CHAIRMAN_MODEL, LLM_MODE, AVAILABLE_MODELS, CHAIRMAN_ELIGIBLE_MODELS
 
 app = FastAPI(title="LLM Council API")
 
@@ -34,6 +34,8 @@ class CreateConversationRequest(BaseModel):
 class SendMessageRequest(BaseModel):
     """Request to send a message in a conversation."""
     content: str
+    council_models: List[str] | None = None
+    chairman_model: str | None = None
 
 
 class ConversationMetadata(BaseModel):
@@ -67,6 +69,36 @@ async def get_providers():
         "providers": status,
         "council_models": COUNCIL_MODELS,
         "chairman_model": CHAIRMAN_MODEL,
+    }
+
+
+@app.get("/api/models")
+async def get_models():
+    """
+    Get available models configuration.
+
+    Returns:
+        - providers: Dict of provider -> {available, models}
+        - chairman_eligible: List of models suitable for chairman role
+        - defaults: Current default configuration
+    """
+    provider_status = get_provider_status()
+
+    # Build provider info with availability
+    providers = {}
+    for provider_name, models in AVAILABLE_MODELS.items():
+        providers[provider_name] = {
+            "available": provider_status.get(provider_name, False),
+            "models": models
+        }
+
+    return {
+        "providers": providers,
+        "chairman_eligible": CHAIRMAN_ELIGIBLE_MODELS,
+        "defaults": {
+            "council_models": COUNCIL_MODELS,
+            "chairman_model": CHAIRMAN_MODEL
+        }
     }
 
 
@@ -117,7 +149,9 @@ async def send_message(conversation_id: str, request: SendMessageRequest):
 
     # Run the 3-stage council process
     stage1_results, stage2_results, stage3_result, metadata = await run_full_council(
-        request.content
+        request.content,
+        request.council_models,
+        request.chairman_model
     )
 
     # Add assistant message with all stages
@@ -163,18 +197,30 @@ async def send_message_stream(conversation_id: str, request: SendMessageRequest)
 
             # Stage 1: Collect responses
             yield f"data: {json.dumps({'type': 'stage1_start'})}\n\n"
-            stage1_results = await stage1_collect_responses(request.content)
+            stage1_results = await stage1_collect_responses(
+                request.content,
+                request.council_models
+            )
             yield f"data: {json.dumps({'type': 'stage1_complete', 'data': stage1_results})}\n\n"
 
             # Stage 2: Collect rankings
             yield f"data: {json.dumps({'type': 'stage2_start'})}\n\n"
-            stage2_results, label_to_model = await stage2_collect_rankings(request.content, stage1_results)
+            stage2_results, label_to_model = await stage2_collect_rankings(
+                request.content,
+                stage1_results,
+                request.council_models
+            )
             aggregate_rankings = calculate_aggregate_rankings(stage2_results, label_to_model)
             yield f"data: {json.dumps({'type': 'stage2_complete', 'data': stage2_results, 'metadata': {'label_to_model': label_to_model, 'aggregate_rankings': aggregate_rankings}})}\n\n"
 
             # Stage 3: Synthesize final answer
             yield f"data: {json.dumps({'type': 'stage3_start'})}\n\n"
-            stage3_result = await stage3_synthesize_final(request.content, stage1_results, stage2_results)
+            stage3_result = await stage3_synthesize_final(
+                request.content,
+                stage1_results,
+                stage2_results,
+                request.chairman_model
+            )
             yield f"data: {json.dumps({'type': 'stage3_complete', 'data': stage3_result})}\n\n"
 
             # Wait for title generation if it was started

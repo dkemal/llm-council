@@ -1,10 +1,18 @@
 .stage2 {
-  background: #fafafa;
+  background: #fff8f0; /* Light warm orange to differentiate */
+  border-color: #ffe4cc;
+  border-width: 1px;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.08);
+  animation: slideInUp 0.3s ease-out;
+}
+
+.stage2 .stage-title::before {
+  background: #ff8c00; /* Orange indicator */
 }
 
 .stage2 h4 {
   margin: 20px 0 8px 0;
-  color: #333;
+  color: #1a1a1a; /* WCAG AAA compliant - was #333 */
   font-size: 14px;
   font-weight: 600;
 }
@@ -15,17 +23,18 @@
 
 .stage-description {
   margin: 0 0 12px 0;
-  color: #666;
+  color: #595959; /* WCAG AA compliant 4.5:1 */
   font-size: 13px;
   line-height: 1.5;
 }
 
 .aggregate-rankings {
-  background: #f0f7ff;
+  background: #ffffff;
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 20px;
-  border: 2px solid #d0e7ff;
+  border: 2px solid #2a7ae2;
+  box-shadow: 0 2px 6px rgba(42, 122, 226, 0.15);
 }
 
 .aggregate-rankings h4 {
@@ -66,9 +75,10 @@
 }
 
 .rank-score {
-  color: #666;
+  color: #595959; /* WCAG AA compliant 4.5:1 */
   font-size: 13px;
   font-family: monospace;
+  font-weight: 500;
 }
 
 .stage2 .tabs {
@@ -83,16 +93,18 @@
   background: #ffffff;
   border: 1px solid #d0d0d0;
   border-radius: 6px 6px 0 0;
-  color: #666;
+  color: #595959; /* WCAG AA compliant - was #666 */
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .stage2 .tab:hover {
   background: #f0f0f0;
   color: #333;
   border-color: #4a90e2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.15);
 }
 
 .stage2 .tab.active {
@@ -109,17 +121,19 @@
   border-radius: 6px;
   border: 1px solid #e0e0e0;
   margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .ranking-model {
-  color: #888;
+  color: #595959; /* WCAG AA compliant 4.5:1 */
   font-size: 12px;
   font-family: monospace;
   margin-bottom: 12px;
+  font-weight: 500;
 }
 
 .ranking-content {
-  color: #333;
+  color: #1a1a1a; /* WCAG AAA compliant - was #333 */
   line-height: 1.6;
   font-size: 14px;
 }
@@ -148,6 +162,6 @@
 }
 
 .rank-count {
-  color: #999;
+  color: #767676; /* WCAG AA compliant for 12px - was #999 */
   font-size: 12px;
 }
