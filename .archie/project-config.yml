@@ -1,0 +1,23 @@
+# ARCHIE Project Configuration
+project_name: llm-council
+archie_version: 5.2.0
+created: 2026-01-01
+description: 3-stage LLM deliberation system with anonymized peer review
+
+# Stack
+framework: fastapi
+frontend_framework: react-vite
+ui_library: vanilla-css
+database: json-file
+package_manager:
+  backend: uv
+  frontend: npm
+
+# Ports
+ports:
+  backend: 8001
+  frontend: 5173
+
+# Features
+audit_capture_enabled: true
+wireframe_mode: false

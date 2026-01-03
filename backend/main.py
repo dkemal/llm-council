@@ -11,6 +11,8 @@ import asyncio
 
 from . import storage
 from .council import run_full_council, generate_conversation_title, stage1_collect_responses, stage2_collect_rankings, stage3_synthesize_final, calculate_aggregate_rankings
+from .providers import get_provider_status
+from .config import COUNCIL_MODELS, CHAIRMAN_MODEL, LLM_MODE
 
 app = FastAPI(title="LLM Council API")
 
@@ -54,6 +56,18 @@ class Conversation(BaseModel):
 async def root():
     """Health check endpoint."""
     return {"status": "ok", "service": "LLM Council API"}
+
+
+@app.get("/api/providers")
+async def get_providers():
+    """Get provider configuration and availability status."""
+    status = get_provider_status()
+    return {
+        "mode": LLM_MODE,
+        "providers": status,
+        "council_models": COUNCIL_MODELS,
+        "chairman_model": CHAIRMAN_MODEL,
+    }
 
 
 @app.get("/api/conversations", response_model=List[ConversationMetadata])

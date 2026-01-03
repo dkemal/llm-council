@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-01-03T16:14:18+07:00",
+  "mode": "quick",
+  "project": {
+    "name": "llm-council",
+    "path": "/Users/djamil/Github/llm-counsel/llm-council"
+  },
+  "git": {
+    "branch": "master",
+    "changes": 21
+  },
+  "current_page": {
+    "page_type": "unknown",
+    "page_name": "Not Set",
+    "page_path": "",
+    "page_url": "",
+    "wireframe_mode": "false"
+  },
+  "servers": [
+    {
+      "port": 7679,
+      "pid": "1571",
+      "process": "Google"
+    },
+    {
+      "port": 3000,
+      "pid": "8352",
+      "process": "node"
+    },
+    {
+      "port": 7000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 7000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 5000,
+      "pid": "57068",
+      "process": "ControlCe"
+    },
+    {
+      "port": 5000,
+      "pid": "57068",
+      "process": "ControlCe"
+    }
+  ]
+}

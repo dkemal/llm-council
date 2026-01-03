@@ -1,0 +1,13 @@
+{
+  "navigation": {
+    "type": "sidebar",
+    "position": "left"
+  },
+  "theme": {
+    "mode": "light",
+    "primary_color": "#000000"
+  },
+  "responsive": {
+    "priority": "mobile-first"
+  }
+}

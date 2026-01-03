@@ -1,0 +1,16 @@
+version: 1.0.0
+environment: development
+build_integration: true
+validation_required: true
+
+environments:
+  development:
+    validate_syntax: false
+    allow_experimental: true
+  staging:
+    validate_syntax: true
+    allow_experimental: false
+  production:
+    validate_syntax: true
+    allow_experimental: false
+    require_approval: true
